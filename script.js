@@ -1,41 +1,60 @@
-// ==================================================
-// ShopEasy Customer Experience - A/B Testing System
-// ==================================================
+// ============================================
+// ShopEasy A/B Testing System
+// ============================================
 
-// Read saved data safely
-function getCount(key) {
-    return Number(localStorage.getItem(key) || 0);
+// Increase a counter stored in localStorage.
+function increaseCount(key) {
+    const current = Number(localStorage.getItem(key) || 0);
+
+    localStorage.setItem(key, current + 1);
 }
 
-// Save data
-function saveCount(key, value) {
-    localStorage.setItem(key, String(value));
-}
-
-// Record a page visit
+// Record one visit per browser tab session.
 function recordVisit(version) {
-    const key = `visitors_${version}`;
-    saveCount(key, getCount(key) + 1);
+    const visitKey = `visitors_${version}`;
+    const sessionKey = `visit_recorded_${version}`;
+
+    if (sessionStorage.getItem(sessionKey) !== "yes") {
+        increaseCount(visitKey);
+
+        sessionStorage.setItem(sessionKey, "yes");
+    }
 }
 
-// Record a completed demo checkout
-function recordCheckout(version) {
-    const key = `completed_${version}`;
-    saveCount(key, getCount(key) + 1);
-}
+// Record a checkout only once per tab session.
+function recordCheckout(version, messageId, buttonId) {
+    const completedKey = `completed_${version}`;
+    const sessionKey = `checkout_completed_${version}`;
 
-// Calculate completion rate
-function calculateRate(visitors, completed) {
-    if (visitors === 0) {
-        return "0.0%";
+    const message = document.getElementById(messageId);
+    const button = document.getElementById(buttonId);
+
+    if (sessionStorage.getItem(sessionKey) === "yes") {
+        message.textContent =
+            "Checkout has already been submitted in this session.";
+
+        if (button) {
+            button.disabled = true;
+        }
+
+        return;
     }
 
-    return ((completed / visitors) * 100).toFixed(1) + "%";
+    increaseCount(completedKey);
+
+    sessionStorage.setItem(sessionKey, "yes");
+
+    message.textContent =
+        "Demo order submitted successfully!";
+
+    if (button) {
+        button.disabled = true;
+    }
 }
 
-// ==================================================
-// VERSION A - Original Checkout
-// ==================================================
+// ============================================
+// VERSION A: Original Checkout
+// ============================================
 
 const formA = document.getElementById("checkoutForm");
 
@@ -45,30 +64,17 @@ if (formA) {
     formA.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        if (!formA.checkValidity()) {
-            formA.reportValidity();
-            return;
-        }
-
-        recordCheckout("A");
-
-        const message = document.getElementById("message");
-
-        if (message) {
-            message.textContent =
-                "Demo order submitted successfully!";
-            message.style.color = "green";
-        }
-
-        formA.querySelector('button[type="submit"]').disabled = true;
-
-        updateDashboard();
+        recordCheckout(
+            "A",
+            "message",
+            null
+        );
     });
 }
 
-// ==================================================
-// VERSION B - Improved Checkout
-// ==================================================
+// ============================================
+// VERSION B: Improved Checkout
+// ============================================
 
 const formB = document.getElementById("checkoutFormB");
 
@@ -78,74 +84,10 @@ if (formB) {
     formB.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        if (!formB.checkValidity()) {
-            formB.reportValidity();
-            return;
-        }
-
-        recordCheckout("B");
-
-        const message = document.getElementById("messageB");
-
-        if (message) {
-            message.textContent =
-                "Demo order submitted successfully!";
-            message.style.color = "green";
-        }
-
-        formB.querySelector('button[type="submit"]').disabled = true;
-
-        updateDashboard();
+        recordCheckout(
+            "B",
+            "messageB",
+            "placeOrderB"
+        );
     });
 }
-
-// ==================================================
-// UPDATE A/B TESTING DASHBOARD
-// ==================================================
-
-function updateDashboard() {
-    const visitorsA = getCount("visitors_A");
-    const completedA = getCount("completed_A");
-
-    const visitorsB = getCount("visitors_B");
-    const completedB = getCount("completed_B");
-
-    const elements = {
-        visitorsA: document.getElementById("visitorsA"),
-        completedA: document.getElementById("completedA"),
-        rateA: document.getElementById("rateA"),
-
-        visitorsB: document.getElementById("visitorsB"),
-        completedB: document.getElementById("completedB"),
-        rateB: document.getElementById("rateB")
-    };
-
-    if (elements.visitorsA) {
-        elements.visitorsA.textContent = visitorsA;
-        elements.completedA.textContent = completedA;
-        elements.rateA.textContent =
-            calculateRate(visitorsA, completedA);
-
-        elements.visitorsB.textContent = visitorsB;
-        elements.completedB.textContent = completedB;
-        elements.rateB.textContent =
-            calculateRate(visitorsB, completedB);
-    }
-}
-
-// Update dashboard when its page opens
-if (document.getElementById("visitorsA")) {
-    updateDashboard();
-}
-
-// Refresh dashboard when another page updates localStorage
-window.addEventListener("storage", function (event) {
-    if (
-        event.key === "visitors_A" ||
-        event.key === "completed_A" ||
-        event.key === "visitors_B" ||
-        event.key === "completed_B"
-    ) {
-        updateDashboard();
-    }
-});
