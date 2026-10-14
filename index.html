@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopEasy - Checkout</title>
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Contentsquare Tracking Script -->
+    <script defer src="https://t.contentsquare.net/uxa/ee7d7c569a0a5.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Website Header -->
+    <header>
+        <h1>ShopEasy</h1>
+        <p>Your simple online shopping experience</p>
+    </header>
+
+    <!-- Main Checkout Section -->
+    <main>
+
+        <h2>Checkout Page</h2>
+
+        <!-- Product Information -->
+        <section class="product">
+
+            <h3>Wireless Headphones</h3>
+
+            <p>Price: ₹1,499</p>
+
+            <p>Quantity: 1</p>
+
+        </section>
+
+        <!-- Customer Checkout Form -->
+        <section class="checkout">
+
+            <h3>Customer Details</h3>
+
+            <form id="checkoutForm">
+
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email address"
+                    required
+                >
+
+                <label for="address">Delivery Address</label>
+                <textarea
+                    id="address"
+                    name="address"
+                    placeholder="Enter your complete delivery address"
+                    required
+                ></textarea>
+
+                <!-- Order Summary -->
+                <h3>Order Summary</h3>
+
+                <p>Product: Wireless Headphones</p>
+
+                <p>Subtotal: ₹1,499</p>
+
+                <p>Delivery: FREE</p>
+
+                <p><strong>Total Amount: ₹1,499</strong></p>
+
+                <!-- Place Order Button -->
+                <button type="submit">
+                    Place Order
+                </button>
+
+            </form>
+
+            <!-- Order Confirmation Message -->
+            <p id="message" role="status"></p>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>ShopEasy | Customer Experience Project</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

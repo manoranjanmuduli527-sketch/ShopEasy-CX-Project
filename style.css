@@ -1,0 +1,335 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f5f9;
+    margin: 0;
+    color: #333;
+}
+
+header {
+    background-color: #173b67;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+main {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.product,
+.checkout {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    min-height: 80px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #087f5b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #066647;
+}
+/* VERSION B: IMPROVED CHECKOUT DESIGN */
+
+.version-b {
+    background: #f4f7fb;
+    color: #263449;
+    min-height: 100vh;
+}
+
+.version-b .topbar {
+    background: #ffffff;
+    color: #173b67;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5eaf0;
+}
+
+.version-b .brand {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.version-b .brand span {
+    color: #087f5b;
+}
+
+.version-b .secure-message {
+    font-size: 14px;
+}
+
+.version-b .progress-container {
+    max-width: 500px;
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.version-b .progress-step {
+    text-align: center;
+    color: #7c899b;
+    min-width: 65px;
+}
+
+.version-b .progress-step span {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e1e7ef;
+    font-weight: bold;
+}
+
+.version-b .progress-step.completed span,
+.version-b .progress-step.active span {
+    background: #087f5b;
+    color: white;
+}
+
+.version-b .progress-step.active {
+    color: #087f5b;
+    font-weight: bold;
+}
+
+.version-b .progress-step p {
+    margin: 7px 0 0;
+    font-size: 13px;
+}
+
+.version-b .progress-line {
+    height: 2px;
+    width: 65px;
+    background: #dce3ec;
+    margin-top: -22px;
+}
+
+.version-b .checkout-layout {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.version-b .checkout-main h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.version-b .subtitle {
+    color: #68768a;
+    margin-bottom: 25px;
+}
+
+.version-b .checkout-card,
+.version-b .order-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(30, 50, 80, 0.07);
+}
+
+.version-b .checkout-card h2,
+.version-b .order-card h2 {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+.version-b .form-group {
+    margin-bottom: 18px;
+}
+
+.version-b .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.version-b .form-group input,
+.version-b .form-group textarea,
+.version-b .form-group select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d5dce5;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: white;
+}
+
+.version-b .form-group input:focus,
+.version-b .form-group textarea:focus,
+.version-b .form-group select:focus {
+    outline: 2px solid #b4dfd1;
+    border-color: #087f5b;
+}
+
+.version-b .form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.version-b #placeOrderB {
+    width: 100%;
+    padding: 15px;
+    background: #087f5b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.version-b #placeOrderB:hover {
+    background: #066647;
+}
+
+.version-b #messageB {
+    font-weight: bold;
+    color: #087f5b;
+    text-align: center;
+}
+
+.version-b .demo-note {
+    color: #68768a;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.version-b .product-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.version-b .product-icon {
+    width: 55px;
+    height: 55px;
+    background: #eef3f8;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+}
+
+.version-b .product-info {
+    flex: 1;
+}
+
+.version-b .product-info h3 {
+    font-size: 14px;
+    margin: 0 0 6px;
+}
+
+.version-b .product-info p {
+    font-size: 13px;
+    color: #68768a;
+    margin: 0;
+}
+
+.version-b .product-row strong {
+    font-size: 14px;
+}
+
+.version-b .price-row,
+.version-b .total-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.version-b .free {
+    color: #087f5b;
+    font-weight: bold;
+}
+
+.version-b .total-row {
+    font-size: 17px;
+}
+
+.version-b .trust-box {
+    background: #eff9f5;
+    color: #176b50;
+    border-radius: 8px;
+    padding: 15px;
+    line-height: 2;
+    font-size: 13px;
+    margin-top: 25px;
+}
+
+.version-b footer {
+    text-align: center;
+    padding: 25px;
+    color: #68768a;
+    font-size: 13px;
+}
+
+/* Mobile-friendly layout */
+@media (max-width: 750px) {
+    .version-b .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .version-b .checkout-main h1 {
+        font-size: 25px;
+    }
+
+    .version-b .topbar {
+        padding: 18px;
+    }
+
+    .version-b .progress-container {
+        gap: 5px;
+        padding: 0 10px;
+    }
+
+    .version-b .progress-line {
+        width: 35px;
+    }
+}

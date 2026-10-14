@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopEasy A/B Testing Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fa;
+            margin: 0;
+            padding: 25px;
+            color: #263449;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        h1, .subtitle {
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .metric {
+            margin: 20px 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .metric strong {
+            display: block;
+            font-size: 25px;
+            margin-top: 8px;
+        }
+
+        .version-a {
+            color: #2563eb;
+        }
+
+        .version-b {
+            color: #07805b;
+        }
+
+        .note {
+            background: #fff7df;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>A/B Testing Dashboard</h1>
+
+    <p class="subtitle">
+        ShopEasy Customer Experience Project
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h2 class="version-a">Version A</h2>
+            <p>Original Checkout Design</p>
+
+            <div class="metric">
+                Visitors
+                <strong id="visitorsA">0</strong>
+            </div>
+
+            <div class="metric">
+                Completed Checkouts
+                <strong id="completedA">0</strong>
+            </div>
+
+            <div class="metric">
+                Completion Rate
+                <strong id="rateA">0%</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="version-b">Version B</h2>
+            <p>Improved Checkout Design</p>
+
+            <div class="metric">
+                Visitors
+                <strong id="visitorsB">0</strong>
+            </div>
+
+            <div class="metric">
+                Completed Checkouts
+                <strong id="completedB">0</strong>
+            </div>
+
+            <div class="metric">
+                Completion Rate
+                <strong id="rateB">0%</strong>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="note">
+        <strong>Important:</strong>
+        This dashboard currently displays zero because no test data
+        has been collected yet. We will record actual user observations
+        before comparing the designs.
+    </div>
+
+</div>
+
+<script>
+    function updateDashboard() {
+        const visitorsA = Number(
+            localStorage.getItem("visitors_A") || 0
+        );
+
+        const completedA = Number(
+            localStorage.getItem("completed_A") || 0
+        );
+
+        const visitorsB = Number(
+            localStorage.getItem("visitors_B") || 0
+        );
+
+        const completedB = Number(
+            localStorage.getItem("completed_B") || 0
+        );
+
+        const rateA = visitorsA
+            ? (completedA / visitorsA) * 100
+            : 0;
+
+        const rateB = visitorsB
+            ? (completedB / visitorsB) * 100
+            : 0;
+
+        document.getElementById("visitorsA").textContent =
+            visitorsA;
+
+        document.getElementById("completedA").textContent =
+            completedA;
+
+        document.getElementById("rateA").textContent =
+            rateA.toFixed(1) + "%";
+
+        document.getElementById("visitorsB").textContent =
+            visitorsB;
+
+        document.getElementById("completedB").textContent =
+            completedB;
+
+        document.getElementById("rateB").textContent =
+            rateB.toFixed(1) + "%";
+    }
+
+    updateDashboard();
+
+    // Refresh the dashboard values periodically.
+    setInterval(updateDashboard, 2000);
+</script>
+</body>
+</html>
