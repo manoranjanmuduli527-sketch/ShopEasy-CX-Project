@@ -1,110 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ShopEasy - Checkout</title>
-
-    <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Contentsquare Tracking Script -->
-    <script defer src="https://t.contentsquare.net/uxa/ee7d7c569a0a5.js"></script>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShopEasy | Version A</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
-
 <body>
-
-    <!-- Website Header -->
-    <header>
-        <h1>ShopEasy</h1>
-        <p>Your simple online shopping experience</p>
-    </header>
-
-    <!-- Main Checkout Section -->
-    <main>
-
-        <h2>Checkout Page</h2>
-
-        <!-- Product Information -->
-        <section class="product">
-
-            <h3>Wireless Headphones</h3>
-
-            <p>Price: ₹1,499</p>
-
-            <p>Quantity: 1</p>
-
-        </section>
-
-        <!-- Customer Checkout Form -->
-        <section class="checkout">
-
-            <h3>Customer Details</h3>
-
-            <form id="checkoutForm">
-
-                <label for="name">Full Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Enter your full name"
-                    required
-                >
-
-                <label for="email">Email Address</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email address"
-                    required
-                >
-
-                <label for="address">Delivery Address</label>
-                <textarea
-                    id="address"
-                    name="address"
-                    placeholder="Enter your complete delivery address"
-                    required
-                ></textarea>
-
-                <!-- Order Summary -->
-                <h3>Order Summary</h3>
-
-                <p>Product: Wireless Headphones</p>
-
-                <p>Subtotal: ₹1,499</p>
-
-                <p>Delivery: FREE</p>
-
-                <p><strong>Total Amount: ₹1,499</strong></p>
-
-                <!-- Place Order Button -->
-                <button type="submit">
-                    Place Order
-                </button>
-
-            </form>
-
-            <!-- Order Confirmation Message -->
-            <p id="message" role="status"></p>
-
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>ShopEasy | Customer Experience Project</p>
-    </footer>
-
-    <!-- JavaScript -->
-    <script src="script.js"></script>
-
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-mark">S</span> ShopEasy</a>
+  <nav><a href="checkout-a.html">Version A</a><a href="checkout-b.html">Version B</a><a href="ab-test.html">A/B Dashboard</a></nav>
+</header>
+<main class="container">
+  <section class="hero">
+    <div><p class="eyebrow">CUSTOMER EXPERIENCE LAB</p><h1>Everyday tech.<br><span>Easy shopping.</span></h1><p class="muted">Choose a product and try our original checkout experience.</p><a class="button button-primary" href="#products">Explore products</a></div>
+    <div class="hero-art"><div class="orb">🛍️</div><span class="floating-tag">Demo store · No real payment</span></div>
+  </section>
+  <section id="products" class="section-head"><div><p class="eyebrow">CURATED FOR YOU</p><h2>Popular products</h2></div><span class="pill">3 demo products</span></section>
+  <section class="product-grid">
+    <article class="product-card"><div class="product-emoji purple">🎧</div><p class="category">AUDIO</p><h3>Wireless Headphones</h3><p class="muted">Clear sound for work and travel.</p><div class="product-bottom"><strong>₹1,499</strong><button class="button button-dark add-to-cart" data-id="headphones">Add to cart</button></div></article>
+    <article class="product-card"><div class="product-emoji peach">⌚</div><p class="category">WEARABLES</p><h3>Smart Watch</h3><p class="muted">A simple companion for your day.</p><div class="product-bottom"><strong>₹2,499</strong><button class="button button-dark add-to-cart" data-id="watch">Add to cart</button></div></article>
+    <article class="product-card"><div class="product-emoji mint">🔊</div><p class="category">AUDIO</p><h3>Bluetooth Speaker</h3><p class="muted">Compact sound for any room.</p><div class="product-bottom"><strong>₹999</strong><button class="button button-dark add-to-cart" data-id="speaker">Add to cart</button></div></article>
+  </section>
+  <section class="cart-panel">
+    <div class="section-head"><div><p class="eyebrow">YOUR SELECTION</p><h2>Shopping cart <span class="count-badge" id="cart-count">0</span></h2></div><button id="clear-cart" class="text-button" type="button">Clear cart</button></div>
+    <div id="cart-items" class="cart-items"><p class="muted">Your cart is empty. Add a product to get started.</p></div>
+    <div class="cart-footer"><div><span class="muted">Subtotal</span><strong id="cart-subtotal">₹0</strong></div><a id="continue-checkout" class="button button-primary disabled" href="checkout-a.html">Continue to Version A checkout</a></div>
+  </section>
+  <p class="notice">Student demo only: no payment is collected. Experiment data is stored in this browser.</p>
+</main>
+<footer>ShopEasy CX Lab <span>Designed to study checkout experience</span></footer>
 </body>
-
 </html>

@@ -1,157 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ShopEasy | Improved Checkout</title>
-
-    <link rel="stylesheet" href="style.css">
-    <script defer src="https://t.contentsquare.net/uxa/ee7d7c569a0a5.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ShopEasy | Version B</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
-
-<body class="version-b">
-
-    <header class="topbar">
-        <div class="brand">ShopEasy<span>.</span></div>
-        <div class="secure-message">🔒 Secure Checkout</div>
-    </header>
-
-    <div class="progress-container">
-        <div class="progress-step completed">
-            <span>1</span>
-            <p>Cart</p>
-        </div>
-
-        <div class="progress-line"></div>
-
-        <div class="progress-step active">
-            <span>2</span>
-            <p>Delivery</p>
-        </div>
-
-        <div class="progress-line"></div>
-
-        <div class="progress-step">
-            <span>3</span>
-            <p>Confirmation</p>
-        </div>
-    </div>
-
-    <main class="checkout-layout">
-
-        <section class="checkout-main">
-
-            <h1>Complete Your Order</h1>
-            <p class="subtitle">
-                Just a few details and your order will be ready!
-            </p>
-
-            <div class="checkout-card">
-                <h2>📦 Delivery Information</h2>
-
-                <form id="checkoutFormB">
-
-                    <div class="form-group">
-                        <label for="nameB">Full Name</label>
-                        <input
-                            type="text"
-                            id="nameB"
-                            placeholder="Enter your full name"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="emailB">Email Address</label>
-                        <input
-                            type="email"
-                            id="emailB"
-                            placeholder="Enter your email"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="addressB">Delivery Address</label>
-                        <textarea
-                            id="addressB"
-                            placeholder="Enter your complete address"
-                            required
-                        ></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="paymentB">Payment Method</label>
-                        <select id="paymentB" required>
-                            <option value="">Choose a payment method</option>
-                            <option value="cod">Cash on Delivery (Demo)</option>
-                            <option value="upi">UPI (Demo Only)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" id="placeOrderB">
-                        Place Your Order →
-                    </button>
-
-                    <p id="messageB" role="status"></p>
-
-                    <p class="demo-note">
-                        Student project demonstration. No real payment is processed.
-                    </p>
-
-                </form>
-            </div>
-
-        </section>
-
-        <aside class="order-card">
-
-            <h2>Your Order</h2>
-
-            <div class="product-row">
-                <div class="product-icon">🎧</div>
-
-                <div class="product-info">
-                    <h3>Wireless Headphones</h3>
-                    <p>Quantity: 1</p>
-                </div>
-
-                <strong>₹1,499</strong>
-            </div>
-
-            <div class="price-row">
-                <span>Subtotal</span>
-                <span>₹1,499</span>
-            </div>
-
-            <div class="price-row">
-                <span>Delivery</span>
-                <span class="free">FREE</span>
-            </div>
-
-            <hr>
-
-            <div class="total-row">
-                <span>Total Amount</span>
-                <strong>₹1,499</strong>
-            </div>
-
-            <div class="trust-box">
-                ✓ Clear pricing<br>
-                ✓ Simple checkout<br>
-                ✓ No hidden delivery charges
-            </div>
-
-        </aside>
-
-    </main>
-
-    <footer>
-        ShopEasy Customer Experience Project | Version B
-    </footer>
-
-    <script src="script.js"></script>
-
+<body data-version="B">
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-mark">S</span> ShopEasy</a>
+  <nav><a href="index.html">Version A</a><a class="active" href="checkout-b.html">Version B</a><a href="ab-test.html">A/B Dashboard</a></nav>
+</header>
+<main class="container checkout-container">
+  <div class="checkout-heading"><p class="eyebrow">VERSION B · IMPROVED DESIGN</p><h1>A smoother way to checkout.</h1><p class="muted">Clear steps, visible order total, and helpful form labels.</p></div>
+  <div class="checkout-layout">
+    <section class="checkout-card">
+      <div class="step-line"><span class="step-number">1</span><div><h2>Delivery details</h2><p class="muted">Where should we send your order?</p></div></div>
+      <form id="checkout-form">
+        <label for="customer-name">Full name</label><input id="customer-name" name="name" autocomplete="name" required placeholder="e.g. Rahul Kumar">
+        <label for="customer-email">Email address</label><input id="customer-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+        <label for="customer-address">Delivery address</label><textarea id="customer-address" name="address" rows="3" required placeholder="House number, street, city"></textarea>
+        <label for="customer-payment">Demo payment method</label><select id="customer-payment" name="payment" required><option value="">Choose a demo option</option><option>Cash on delivery (demo)</option><option>UPI (demo only)</option></select>
+        <button class="button button-primary full-width" type="submit">Complete demo order</button>
+        <p class="small muted">This is a classroom simulation. No payment will be processed.</p>
+      </form>
+    </section>
+    <aside class="order-card">
+      <p class="eyebrow">ORDER SUMMARY</p><h2>Your order</h2>
+      <div id="checkout-items" class="checkout-items"><p class="muted">Your cart is empty.</p></div>
+      <div class="summary-row"><span>Subtotal</span><strong id="checkout-subtotal">₹0</strong></div>
+      <div class="summary-row"><span>Delivery</span><strong>FREE</strong></div>
+      <div class="summary-row total-row"><span>Total</span><strong id="checkout-total">₹0</strong></div>
+      <a class="text-button" href="index.html">← Back to products</a>
+    </aside>
+  </div>
+  <section class="feedback-card"><div><p class="eyebrow">TELL US HOW WE DID</p><h2>Rate your checkout experience</h2><p class="muted">Your rating is saved locally for this demo.</p></div>
+    <div class="feedback-controls"><label for="rating">Your rating</label><select id="rating"><option value="5">5 — Excellent</option><option value="4">4 — Good</option><option value="3">3 — Average</option><option value="2">2 — Poor</option><option value="1">1 — Very poor</option></select><button id="submit-feedback" class="button button-dark" type="button">Submit feedback</button><p id="feedback-message" class="small" aria-live="polite"></p></div>
+  </section>
+</main>
+<footer>ShopEasy CX Lab <span>Version B · Improved checkout</span></footer>
 </body>
 </html>
