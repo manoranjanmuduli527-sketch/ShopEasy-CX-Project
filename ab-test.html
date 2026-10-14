@@ -48,7 +48,7 @@
         }
 
         .card {
-            background: #ffffff;
+            background: #fff;
             padding: 26px;
             border-radius: 14px;
             box-shadow: 0 4px 15px #00000010;
@@ -91,10 +91,31 @@
 
         .note {
             background: #fff7df;
-            padding: 17px;
+            padding: 18px;
             border-radius: 9px;
             margin-top: 25px;
             line-height: 1.7;
+        }
+
+        .note p {
+            margin-bottom: 0;
+        }
+
+        .result-card {
+            background: #fff;
+            padding: 22px;
+            margin-top: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px #00000010;
+        }
+
+        .result-card h2 {
+            margin-top: 0;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
         }
 
         .status {
@@ -107,7 +128,7 @@
         .reset-button {
             display: block;
             margin: 20px auto 0;
-            padding: 11px 18px;
+            padding: 12px 20px;
             background: #263449;
             color: white;
             border: none;
@@ -146,6 +167,7 @@
             ShopEasy Customer Experience Project
         </p>
 
+        <!-- Version comparison cards -->
         <section class="cards">
 
             <!-- VERSION A -->
@@ -202,12 +224,39 @@
 
         </section>
 
+        <!-- Comparison result -->
+        <section class="result-card">
+
+            <h2>Performance Comparison</h2>
+
+            <p>
+                Version A Rate:
+                <strong id="comparisonRateA">0.0%</strong>
+            </p>
+
+            <p>
+                Version B Rate:
+                <strong id="comparisonRateB">0.0%</strong>
+            </p>
+
+            <p>
+                Difference:
+                <strong id="rateDifference">0.0 percentage points</strong>
+            </p>
+
+            <p class="result" id="winnerMessage" aria-live="polite">
+                Waiting for checkout data...
+            </p>
+
+        </section>
+
+        <!-- Testing status -->
         <section class="note" aria-live="polite">
 
-            <strong>Testing Status:</strong>
+            <strong>Testing Status</strong>
 
             <p id="statusMessage">
-                Loading checkout statistics...
+                Loading statistics...
             </p>
 
         </section>
@@ -216,120 +265,281 @@
             Waiting for data...
         </p>
 
-        <button type="button" class="reset-button" id="resetButton">
+        <button
+            type="button"
+            class="reset-button"
+            id="resetButton">
+
             Reset Demo Statistics
+
         </button>
 
         <p class="status">
-            ShopEasy CX Project | Demo Analytics
+            ShopEasy CX Project | A/B Testing Demo
         </p>
 
     </main>
 
     <script>
         // ==========================================
-        // SHOP EASY A/B TESTING DASHBOARD
-        // Reads demo statistics from localStorage.
+        // SHOPEASY A/B TESTING DASHBOARD
+        // Data source: Browser localStorage
         // ==========================================
 
+        const STORAGE_KEYS = [
+            "visitors_A",
+            "completed_A",
+            "visitors_B",
+            "completed_B"
+        ];
+
+        // Read and validate stored values.
         function readCount(key) {
-            const value = Number(localStorage.getItem(key) || 0);
 
-            return Number.isFinite(value) && value >= 0
-                ? value
-                : 0;
-        }
+            const rawValue = localStorage.getItem(key);
 
-        function calculateRate(visitors, completed) {
-            if (visitors === 0) {
-                return "0.0%";
+            if (rawValue === null || rawValue.trim() === "") {
+                return 0;
             }
 
-            return ((completed / visitors) * 100).toFixed(1) + "%";
+            const value = Number(rawValue);
+
+            if (
+                !Number.isSafeInteger(value) ||
+                value < 0
+            ) {
+                return 0;
+            }
+
+            return value;
         }
 
+        // Calculate checkout completion rate.
+        function calculateRate(visitors, completed) {
+
+            if (visitors === 0) {
+                return 0;
+            }
+
+            return (completed / visitors) * 100;
+        }
+
+        // Display percentages with one decimal place.
+        function formatRate(rate) {
+
+            return rate.toFixed(1) + "%";
+        }
+
+        // Update the complete dashboard.
         function updateDashboard() {
-            const visitorsA = readCount("visitors_A");
-            const completedA = readCount("completed_A");
 
-            const visitorsB = readCount("visitors_B");
-            const completedB = readCount("completed_B");
+            let visitorsA;
+            let completedA;
+            let visitorsB;
+            let completedB;
 
+            try {
+
+                visitorsA = readCount("visitors_A");
+                completedA = readCount("completed_A");
+
+                visitorsB = readCount("visitors_B");
+                completedB = readCount("completed_B");
+
+            } catch (error) {
+
+                document.getElementById("statusMessage").textContent =
+                    "Unable to read browser storage. Check browser permissions.";
+
+                return;
+            }
+
+            const rateA = calculateRate(
+                visitorsA,
+                completedA
+            );
+
+            const rateB = calculateRate(
+                visitorsB,
+                completedB
+            );
+
+            // Update Version A.
             document.getElementById("visitorsA").textContent =
-                visitorsA;
+                visitorsA.toLocaleString();
 
             document.getElementById("completedA").textContent =
-                completedA;
+                completedA.toLocaleString();
 
             document.getElementById("rateA").textContent =
-                calculateRate(visitorsA, completedA);
+                formatRate(rateA);
 
+            // Update Version B.
             document.getElementById("visitorsB").textContent =
-                visitorsB;
+                visitorsB.toLocaleString();
 
             document.getElementById("completedB").textContent =
-                completedB;
+                completedB.toLocaleString();
 
             document.getElementById("rateB").textContent =
-                calculateRate(visitorsB, completedB);
+                formatRate(rateB);
+
+            // Update comparison values.
+            document.getElementById("comparisonRateA").textContent =
+                formatRate(rateA);
+
+            document.getElementById("comparisonRateB").textContent =
+                formatRate(rateB);
+
+            const difference = rateB - rateA;
+
+            const differenceText =
+                (difference > 0 ? "+" : "") +
+                difference.toFixed(1) +
+                " percentage points";
+
+            document.getElementById("rateDifference").textContent =
+                differenceText;
 
             const totalVisitors = visitorsA + visitorsB;
 
             const statusMessage =
                 document.getElementById("statusMessage");
 
-            if (totalVisitors === 0) {
+            const winnerMessage =
+                document.getElementById("winnerMessage");
+
+            // Detect inconsistent tracking data.
+            if (
+                completedA > visitorsA ||
+                completedB > visitorsB
+            ) {
+
                 statusMessage.textContent =
-                    "No checkout visits have been recorded in this browser yet. Open Version A or Version B to begin testing.";
+                    "The recorded checkout counts exceed the visitor counts for at least one version. " +
+                    "Check script.js for duplicate submissions or incorrect visitor tracking.";
+
+                winnerMessage.textContent =
+                    "Comparison unavailable: check the tracking data.";
+
+            } else if (totalVisitors === 0) {
+
+                statusMessage.textContent =
+                    "No checkout visits have been recorded in this browser. " +
+                    "Open Version A or Version B to begin testing.";
+
+                winnerMessage.textContent =
+                    "Waiting for checkout data...";
+
             } else {
+
                 statusMessage.textContent =
-                    "Demo data found: " + totalVisitors +
-                    " recorded visits. Collect more observations before deciding which design performs better.";
+                    "This dashboard contains " +
+                    totalVisitors.toLocaleString() +
+                    " locally recorded visits. These are demonstration statistics, " +
+                    "not centralized analytics from all website users.";
+
+                // Require a minimum sample before showing a provisional leader.
+                const minimumVisitors = 30;
+
+                if (
+                    visitorsA < minimumVisitors ||
+                    visitorsB < minimumVisitors
+                ) {
+
+                    winnerMessage.textContent =
+                        "Insufficient data to identify a reliable winner. " +
+                        "Collect more observations for both versions.";
+
+                } else if (difference > 0) {
+
+                    winnerMessage.textContent =
+                        "Version B currently has the higher observed completion rate. " +
+                        "Further testing is needed before declaring a winner.";
+
+                } else if (difference < 0) {
+
+                    winnerMessage.textContent =
+                        "Version A currently has the higher observed completion rate. " +
+                        "Further testing is needed before declaring a winner.";
+
+                } else {
+
+                    winnerMessage.textContent =
+                        "Both versions currently have the same observed completion rate.";
+                }
+            }
+
+            // Check for missing or inconsistent counts.
+            if (
+                completedA > visitorsA ||
+                completedB > visitorsB
+            ) {
+                // Keep the data-quality warning visible.
+            } else if (totalVisitors === 0) {
+                // No data collected yet.
+            } else if (
+                visitorsA < 30 ||
+                visitorsB < 30
+            ) {
+                statusMessage.textContent +=
+                    " Each version should have more observations before meaningful comparison.";
             }
 
             document.getElementById("lastUpdated").textContent =
-                "Last updated: " + new Date().toLocaleTimeString();
+                "Last refreshed: " +
+                new Date().toLocaleTimeString();
         }
 
-        // Refresh dashboard data.
+        // Run when the dashboard loads.
         updateDashboard();
 
+        // Refresh automatically every two seconds.
         setInterval(updateDashboard, 2000);
 
-        // Update immediately when another page changes storage.
+        // Refresh when another same-origin tab updates storage.
         window.addEventListener("storage", function (event) {
+
             if (
-                event.key === "visitors_A" ||
-                event.key === "completed_A" ||
-                event.key === "visitors_B" ||
-                event.key === "completed_B" ||
-                event.key === null
+                event.key === null ||
+                STORAGE_KEYS.includes(event.key)
             ) {
                 updateDashboard();
             }
         });
 
-        // Reset only the demo statistics.
+        // Reset demonstration statistics.
         document.getElementById("resetButton")
             .addEventListener("click", function () {
 
                 const confirmed = confirm(
-                    "Reset all ShopEasy demo visitor and checkout statistics?"
+                    "Are you sure you want to reset all ShopEasy A/B testing demo statistics?"
                 );
 
                 if (!confirmed) {
                     return;
                 }
 
-                localStorage.removeItem("visitors_A");
-                localStorage.removeItem("completed_A");
-                localStorage.removeItem("visitors_B");
-                localStorage.removeItem("completed_B");
+                try {
 
-                updateDashboard();
+                    STORAGE_KEYS.forEach(function (key) {
+                        localStorage.removeItem(key);
+                    });
 
-                alert("Demo statistics have been reset.");
+                    updateDashboard();
+
+                    alert(
+                        "Demo statistics have been reset successfully."
+                    );
+
+                } catch (error) {
+
+                    alert(
+                        "Unable to reset statistics. Check browser storage permissions."
+                    );
+                }
             });
+
     </script>
 
 </body>
